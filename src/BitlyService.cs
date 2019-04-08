@@ -18,7 +18,7 @@ namespace restlessmedia.Module.Twitter
         throw new ArgumentNullException(nameof(url), "ShortenUrl requires a valid url");
       }
 
-      if (url.Contains("localhost"))
+      if (url.IndexOf("localhost", StringComparison.OrdinalIgnoreCase) > -1)
       {
         throw new NotSupportedException("Url shorterning for localhost is not supported");
       }
