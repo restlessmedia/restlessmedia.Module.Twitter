@@ -8,10 +8,15 @@ namespace restlessmedia.Module.Twitter
   internal class TwitterService : ITwitterService
   {
     public TwitterService(ITwitterProvider twitterProvider, IAuthService authService, IBitlyService bitlyService, ISecurityDataProvider securityDataProvider)
+      : this(twitterProvider, authService, securityDataProvider)
+    {
+      _bitlyService = bitlyService ?? throw new ArgumentNullException(nameof(bitlyService));
+    }
+
+    public TwitterService(ITwitterProvider twitterProvider, IAuthService authService, ISecurityDataProvider securityDataProvider)
     {
       _twitterProvider = twitterProvider ?? throw new ArgumentNullException(nameof(twitterProvider));
       _authService = authService ?? throw new ArgumentNullException(nameof(authService));
-      _bitlyService = bitlyService;
       _securityDataProvider = securityDataProvider ?? throw new ArgumentNullException(nameof(securityDataProvider));
     }
 

@@ -5,3 +5,5 @@ src/obj
 .DS_Store
 .vs
 packages/**/*
+restlessmedia.Module.Twitter.UnitTest/bin/**/*
+restlessmedia.Module.Twitter.UnitTest/obj/**/*
