@@ -19,15 +19,11 @@ namespace restlessmedia.Module.Twitter
       // we are registering with a different ctor depending
       // on whether the IBitlySettings has been provided or not
 
-      containerBuilder.Register(x => new TwitterService(x.Resolve<ITwitterProvider>(), x.Resolve<IAuthService>(), x.Resolve<IBitlyService>(), x.Resolve<ISecurityDataProvider>()))
-        .OnlyIf(x => x.IsRegistered(new TypedService(typeof(IBitlySettings))))
-        .As<ITwitterService>()
-        .SingleInstance();
-
-      containerBuilder.Register(x => new TwitterService(x.Resolve<ITwitterProvider>(), x.Resolve<IAuthService>(), x.Resolve<ISecurityDataProvider>()))
-        .OnlyIf(x => !x.IsRegistered(new TypedService(typeof(IBitlySettings))))
-        .As<ITwitterService>()
-        .SingleInstance();
+      containerBuilder.RegisterWhen<ITwitterService>(
+        x => x.IsRegistered(new TypedService(typeof(IBitlySettings))),
+        x => new TwitterService(x.Resolve<ITwitterProvider>(), x.Resolve<IAuthService>(), x.Resolve<IBitlyService>(), x.Resolve<ISecurityDataProvider>()),
+        x => new TwitterService(x.Resolve<ITwitterProvider>(), x.Resolve<IAuthService>(), x.Resolve<ISecurityDataProvider>())
+      );
     }
   }
 }
